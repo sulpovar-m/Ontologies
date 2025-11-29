@@ -1,0 +1,205 @@
+@prefix : <http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10/> .
+
+<http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10> rdf:type owl:Ontology .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#содержит_химикат
+:содержит_химикат rdf:type owl:ObjectProperty ;
+                  rdfs:domain :Технологический_поток ;
+                  rdfs:range :Химикат .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#состоит_из
+:состоит_из rdf:type owl:ObjectProperty ;
+            rdfs:domain :Химикат ;
+            rdfs:range :Компонент .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#концентрация_компонента
+:концентрация_компонента rdf:type owl:DatatypeProperty ;
+                         rdfs:domain :Компонент .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#уровень_опасности
+:уровень_опасности rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :Компонент .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#Компонент
+:Компонент rdf:type owl:Class ;
+           rdfs:subClassOf :Субстанция .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#Опасный_поток
+:Опасный_поток rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#Субстанция
+:Субстанция rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#Технологический_поток
+:Технологический_поток rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#Химикат
+:Химикат rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#поток_1
+:поток_1 rdf:type owl:NamedIndividual ;
+         :содержит_химикат :химикат_1 .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#поток_2
+:поток_2 rdf:type owl:NamedIndividual ;
+         :содержит_химикат :химикат_2 .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#соляная_кислота
+:соляная_кислота rdf:type owl:NamedIndividual ,
+                          :Компонент ;
+                 :концентрация_компонента 0.2 ;
+                 :уровень_опасности 3 .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#химикат_1
+:химикат_1 rdf:type owl:NamedIndividual ,
+                    :Химикат ;
+           :состоит_из :соляная_кислота .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#химикат_2
+:химикат_2 rdf:type owl:NamedIndividual ;
+           :состоит_из :хлорид_натрия .
+
+
+###  http://www.semanticweb.org/sulpovar/ontologies/2025/10/untitled-ontology-10#хлорид_натрия
+:хлорид_натрия rdf:type owl:NamedIndividual ,
+                        :Компонент ;
+               :концентрация_компонента 0.5 ;
+               :уровень_опасности 1 .
+
+
+#################################################################
+#    Rules
+#################################################################
+
+:p rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:mix rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:comp rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:hl rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:conc rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "" ;
+   rdfs:label "Правило опасный поток по компоненту" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Технологический_поток ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :p
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :содержит_химикат ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :p ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> :mix
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> :состоит_из ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> :mix ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> :comp
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#classPredicate> :Компонент ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> :comp
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#propertyPredicate> :уровень_опасности ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> :comp ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument2> :hl
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThan> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                                           rdf:first :hl ;
+                                                                                                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                      rdf:first 2 ;
+                                                                                                                                                                      rdf:rest rdf:nil
+                                                                                                                                                                    ]
+                                                                                                                                                         ]
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#propertyPredicate> :концентрация_компонента ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument1> :comp ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument2> :conc
+                                                                                                                       ] ;
+                                                                                                             rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                        rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#greaterThan> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#arguments> [ rdf:type rdf:List ;
+                                                                                                                                                                                 rdf:first :conc ;
+                                                                                                                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                            rdf:first 0.1 ;
+                                                                                                                                                                                            rdf:rest rdf:nil
+                                                                                                                                                                                          ]
+                                                                                                                                                                               ]
+                                                                                                                                  ] ;
+                                                                                                                        rdf:rest rdf:nil
+                                                                                                                      ]
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> :Опасный_поток ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :p
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
